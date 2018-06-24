@@ -9,6 +9,10 @@
     <modules>
         <module>dubbo</module>
         <module>mybatis</module>
+        <module>aop</module>
+        <module>mq</module>
+        <module>redis</module>
+        <module>saga</module>
     </modules>
     <packaging>pom</packaging>
 

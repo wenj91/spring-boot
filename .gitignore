@@ -1,3 +1,7 @@
 .idea/
 dubbo/dubbo.iml
 mybatis/mybatis.iml
+aop/aop.iml
+mq/mq.iml
+redis/redis.iml
+saga/saga.iml
