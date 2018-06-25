@@ -1,0 +1,10 @@
+server:
+  port: 8080
+dubbo:
+  application:
+    name: dubbo-provicer
+  registry:
+    address: redis://127.0.0.1:6379
+  protocol:
+    name: dubbo
+    port: 12345

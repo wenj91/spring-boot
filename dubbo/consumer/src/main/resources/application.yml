@@ -1,0 +1,10 @@
+server:
+  port: 9999
+dubbo:
+  application:
+    name: dubbo-consumer
+  registry:
+    address: redis://127.0.0.1:6379
+  protocol:
+    name: dubbo
+    port: 12345
