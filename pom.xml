@@ -13,6 +13,8 @@
         <module>mq</module>
         <module>redis</module>
         <module>saga</module>
+        <module>util</module>
+        <module>design-pattern</module>
     </modules>
     <packaging>pom</packaging>
 
