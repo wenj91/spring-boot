@@ -1,5 +1,6 @@
 package com.github.wenj91.aop.controller;
 
+import com.github.wenj91.aop.annotation.ArgAnnotation;
 import com.github.wenj91.aop.annotation.TestAnotation;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -12,7 +13,7 @@ public class TestController {
 
     @PostMapping(value = "sayHello")
     @TestAnotation(value = "testAnotation")
-    public String sayHello(String name){
+    public String sayHello(@ArgAnnotation(value = "name") String name){
 
 
         return "hello, " + name;
