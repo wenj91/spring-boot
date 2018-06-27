@@ -7,3 +7,6 @@ redis/redis.iml
 saga/saga.iml
 /util/util.iml
 /design-pattern/design-pattern.iml
+/dubbo/filter/filter.iml
+/dubbo/consumer/consumer.iml
+/dubbo/provider/provider.iml
