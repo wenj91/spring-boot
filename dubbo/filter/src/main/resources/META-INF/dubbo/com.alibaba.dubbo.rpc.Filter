@@ -1,0 +1,2 @@
+consumerFilter=com.github.wenj91.dubbo.filter.ConsumerFilter
+providerFilter=com.github.wenj91.dubbo.filter.ProviderFilter
