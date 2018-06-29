@@ -373,6 +373,7 @@ fun main(args: Array<String>){
 dubbo目前支持zookeeper,redis,multicast,simple作为注册中心,但是官方推荐使[Zookeeper 注册中心](http://dubbo.apache.org/books/dubbo-user-book/references/registry/zookeeper.html)
 
 以下是这些注册中心成熟度说明,可以根据这个来选择合适的注册中心:
+
 |Feature | 	Maturity |	Strength |	Problem |	Advise |	User |
 |:------:|:------:|:------:|:------:|:------:|:------:|
 |Zookeeper注册中心 |	Stable 	|支持基于网络的集群方式，有广泛周边开源产品，建议使用dubbo-2.3.3以上版本|（推荐使用） 	依赖于Zookeeper的稳定性| 	可用于生产环境 	
