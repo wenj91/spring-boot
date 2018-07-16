@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+    <h1>Web Socket Test Page!!!</h1>
+    <div id="message"></div>
+    <input id="text" type="text"/>
+    <input id="sendMsg" type="button" value="Send"/>
+</body>
+<script type="text/javascript">
+    var ws;
+    var reconnectFlag = false;//重连标志位
+    var wsUrl = 'ws://' + window.location.host + '/ws';
+
+    function createWebSocket(url) {
+        try {
+            ws = new WebSocket(url);
+            wsInit();
+        } catch (e) {
+            reconnect(url);
+        }
+    }
+
+    function wsInit() {
+        ws.onopen = function () {
+            // 心跳检测开始
+            heartbeatCheck.reset().start();
+
+            setMessageInnerHTML("open");
+        };
+        ws.onmessage = function (event) {
+            console.log("recv msg from server:", event.data)
+
+            // 普通消息以及心跳消息都判定连接正常
+            switch (event.data){
+                case "ping":
+                    heartbeatCheck.reset().start();
+                    break;
+                case "close":// 关闭指令,不再重连接
+                    heartbeatCheck.reset()
+                    closeWebSocket()
+                default:
+                    heartbeatCheck.reset().start();
+                    setMessageInnerHTML(event.data);
+            }
+        }
+        ws.onclose = function () {
+            setMessageInnerHTML("close");
+        };
+        ws.onerror = function () {
+            setMessageInnerHTML("error");
+        };
+    }
+
+    function reconnect() {
+        if(reconnectFlag) return;
+        reconnectFlag = true;
+        setTimeout(function () {
+            createWebSocket(wsUrl);
+            reconnectFlag = false;
+        }, 2000);
+    }
+
+
+    //心跳检测
+    var heartbeatCheck = {
+        timeout: 6000,//6秒
+        timer: null,
+        reset: function(){
+            clearTimeout(this.timer);
+            return this;
+        },
+        start: function(){
+            console.log("timer start......")
+
+            var self = this;
+            this.timer = setTimeout(function(){
+                console.log("timer timeout, reconnect......")
+                ws.close()
+                reconnect();
+            }, self.timeout)
+        }
+    }
+
+    //将消息显示在网页上
+    function setMessageInnerHTML(innerHTML){
+        document.getElementById('message').innerHTML += innerHTML + '<br/>';
+    }
+
+    //关闭连接
+    function closeWebSocket(){
+        ws.close();
+    }
+
+    //发送消息
+    function send(){
+        var message = document.getElementById('text').value;
+        ws.send(message);
+    }
+
+    document.getElementById("sendMsg").onclick = function (ev) {
+        send()
+    }
+
+    createWebSocket(wsUrl)
+</script>
+</html>
