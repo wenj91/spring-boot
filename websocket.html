@@ -27,7 +27,7 @@
     function wsInit() {
         ws.onopen = function () {
             // 心跳检测开始
-            heartbeatCheck.reset().start();
+            heartbeatCheck.clear().start();
 
             setMessageInnerHTML("open");
         };
@@ -37,14 +37,16 @@
             // 普通消息以及心跳消息都判定连接正常
             switch (event.data){
                 case "ping":
-                    heartbeatCheck.reset().start();
+                    heartbeatCheck.clear().start();
                     break;
                 case "close":// 关闭指令,不再重连接
-                    heartbeatCheck.reset()
+                    heartbeatCheck.clear()
                     closeWebSocket()
+                    break;
                 default:
-                    heartbeatCheck.reset().start();
+                    heartbeatCheck.clear().start();
                     setMessageInnerHTML(event.data);
+                    break;
             }
         }
         ws.onclose = function () {
@@ -68,16 +70,17 @@
     //心跳检测
     var heartbeatCheck = {
         timeout: 6000,//6秒
-        timer: null,
-        reset: function(){
-            clearTimeout(this.timer);
+        checkTimer: null,
+        clear: function(){
+            console.log("clear check timer......")
+            clearTimeout(this.checkTimer);
             return this;
         },
         start: function(){
             console.log("timer start......")
 
             var self = this;
-            this.timer = setTimeout(function(){
+            this.checkTimer = setTimeout(function(){
                 console.log("timer timeout, reconnect......")
                 ws.close()
                 reconnect();
